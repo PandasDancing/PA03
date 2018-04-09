@@ -30469,7 +30469,6 @@
 		MeshDepthMaterial: MeshDepthMaterial,
 		MeshDistanceMaterial: MeshDistanceMaterial,
 		MeshBasicMaterial: MeshBasicMaterial,
-		MeshFaceMaterial: MeshFaceMaterial,
 		LineDashedMaterial: LineDashedMaterial,
 		LineBasicMaterial: LineBasicMaterial,
 		Material: Material
