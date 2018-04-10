@@ -1,0 +1,12 @@
+# Blender MTL File: 'Fox_scene.blend.blend'
+# Material Count: 1
+
+newmtl Material.003
+Ns 96.078431
+Ka 0.562874 0.562874 0.562874
+Kd 0.640000 0.126146 0.346498
+Ks 0.191617 0.191617 0.191617
+Ke 0.360000 0.070957 0.194905
+Ni 1.000000
+d 1.000000
+illum 2

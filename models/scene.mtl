@@ -1,0 +1,44 @@
+# Blender MTL File: 'Fox_scene.blend.blend'
+# Material Count: 4
+
+newmtl Material
+Ns 96.078431
+Ka 0.766467 0.766467 0.766467
+Kd 0.011736 0.001388 0.000000
+Ks 0.062874 0.062874 0.062874
+Ke 0.016576 0.001961 0.000000
+Ni 1.000000
+d 1.000000
+illum 2
+
+newmtl Material.003
+Ns 96.078431
+Ka 0.562874 0.562874 0.562874
+Kd 0.640000 0.126146 0.346498
+Ks 0.191617 0.191617 0.191617
+Ke 0.360000 0.070957 0.194905
+Ni 1.000000
+d 1.000000
+illum 2
+
+newmtl Material.004
+Ns 96.078431
+Ka 1.000000 1.000000 1.000000
+Kd 0.640000 0.640000 0.640000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.000000
+d 1.000000
+illum 2
+map_Kd /Users/xichen/Downloads/lowpoly-fox 2/source/Ground_D.png
+
+newmtl Material.005
+Ns 96.078431
+Ka 1.000000 1.000000 1.000000
+Kd 0.640000 0.640000 0.640000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.000000
+d 1.000000
+illum 2
+map_Kd /Users/xichen/Downloads/lowpoly-fox 2/source/Ground_D.png

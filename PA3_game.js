@@ -114,7 +114,7 @@ The user moves a monkey around the board trying to knock balls into a cone
 
 
 			// create the ground and the skybox
-			var ground = createGround('grass.png');
+			var ground = createGround('Ground_D.png');
 			scene.add(ground);
 			var skybox = createSkyBox('sky.jpg',1);
 			scene.add(skybox);
@@ -317,6 +317,49 @@ The user moves a monkey around the board trying to knock balls into a cone
 		mesh.receiveShadow = true;
 
 		mesh.rotateX(Math.PI/2);
+
+		var particleMaterial = new THREE.MeshBasicMaterial();
+		particleMaterial.map = THREE.ImageUtils.loadTexture('models/pink.jpg');
+		particleMaterial.side = THREE.DoubleSide;
+		var jsonLoader = new THREE.JSONLoader();
+		jsonLoader.load( "models/treetop.js", function (geometry2) {
+			var s = new THREE.Mesh(geometry2, particleMaterial);
+			s.rotateX(Math.PI/2*3);
+			s.scale.set( 0.4, 0.4, 0.4 );
+			s.position.set(25,-25,-15);
+			mesh.add(s);
+		}
+		);
+
+		var particleMaterial2 = new THREE.MeshBasicMaterial();
+		particleMaterial2.map = THREE.ImageUtils.loadTexture('models/brown.jpg');
+		particleMaterial2.side = THREE.DoubleSide;
+		jsonLoader.load( "models/treebody.js", function (geometry2) {
+			var s = new THREE.Mesh(geometry2, particleMaterial2);
+			s.rotateX(Math.PI/2*3);
+			s.scale.set( 0.1, 0.1, 0.1 );
+			s.position.set(25,-25,0);
+			mesh.add(s);
+		}
+		);
+
+		var particleMaterial3 = new THREE.MeshBasicMaterial();
+		particleMaterial3.map = THREE.ImageUtils.loadTexture('models/Ground_D2.png');
+		particleMaterial3.side = THREE.DoubleSide;
+		jsonLoader.load( "models/mountain.js", function (geometry2) {
+			var s = new THREE.Mesh(geometry2, particleMaterial3);
+			var s2 = new THREE.Mesh(geometry2, particleMaterial3);
+			s.rotateX(Math.PI/2*3);
+			s.scale.set( 2, 2, 2 );
+			s.position.set(30,30,0);
+			s2.rotateX(Math.PI/2*3);
+			s2.scale.set( 2, 2, 2 );
+			s2.position.set(40,90,0);
+			mesh.add(s);
+			mesh.add(s2);
+		}
+		);
+
 		return mesh
 		// we need to rotate the mesh 90 degrees to make it horizontal not vertical
 	}
