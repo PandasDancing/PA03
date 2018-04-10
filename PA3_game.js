@@ -186,21 +186,21 @@ The user moves a monkey around the board trying to knock balls into a cone
 
 
 	function addSheeps(){
-		var numBalls = 12;
+		var numSheeps = 12;
 
 
-		for(i=0;i<numBalls;i++){
-			var ball = createSheeps();
-			ball.position.set(randN(20)+10, 30,randN(20)+10);
-			scene.add(ball);
+		for(i=0;i<numSheeps;i++){
+			var sheep = createSheeps();
+			sheep.position.set(randN(20)+10,0.5,randN(20)+10);
+			scene.add(sheep);
 
-			ball.addEventListener( 'collision',
+			sheep.addEventListener( 'collision',
 				function( other_object, relative_velocity, relative_rotation, contact_normal ) {
 					if (other_object==box){
-						console.log("ball "+i+" hit the box");
+						console.log("sheep "+i+" hit the box");
 						soundEffect('good.wav');
 						gameState.score += 1;  // add one to the score
-						if (gameState.score==numBalls) {
+						if (gameState.score==numSheeps) {
 							gameState.scene='youwon';
 						}
 						scene.remove(this);  //why not disapearing??
@@ -554,7 +554,7 @@ The user moves a monkey around the board trying to knock balls into a cone
 		if (gameState.scene == 'youlose' && event.key=='r') {
 			gameState.scene = 'main';
 			gameState.score = 0;
-			addBalls();
+			addSheeps();
 			return;
 		}
 
