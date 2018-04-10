@@ -131,7 +131,7 @@ The user moves a monkey around the board trying to knock balls into a cone
 			scene.add(avatar);
 			gameState.camera = avatarCam;
 
-			addBalls();
+			addSheeps();
 
 			//cone = createConeMesh(4,6);
 			box = createBoxMesh(2,2);
@@ -185,13 +185,13 @@ The user moves a monkey around the board trying to knock balls into a cone
 
 
 
-	function addBalls(){
+	function addSheeps(){
 		var numBalls = 12;
 
 
 		for(i=0;i<numBalls;i++){
-			var ball = createBall();
-			ball.position.set(randN(20)+15,30,randN(20)+15);
+			var ball = createSheeps();
+			ball.position.set(randN(20)+10, 30,randN(20)+10);
 			scene.add(ball);
 
 			ball.addEventListener( 'collision',
@@ -474,29 +474,51 @@ The user moves a monkey around the board trying to knock balls into a cone
 
 
 
-	function createBall(){
-		//var geometry = new THREE.SphereGeometry( 4, 20, 20);
-		var geometry = new THREE.SphereGeometry( 1, 16, 16);
+	// function createBall(){
+	// 	//var geometry = new THREE.SphereGeometry( 4, 20, 20);
+	// 	var geometry = new THREE.SphereGeometry( 1, 16, 16);
+	//
+	// 	var friction = 0.8; // high friction
+	// 	var restitution = 0.3; // low restitution
+	//
+	// 	var material = Physijs.createMaterial(
+  //   	new THREE.MeshBasicMaterial({ color: 0xffff00 }),
+  //   	friction,
+  //   	restitution
+	// 	);
+	//
+	// 	//var material = new THREE.MeshLambertMaterial( { color: 0xffff00} );
+	// 	var pmaterial = new Physijs.createMaterial(material,0.9,0.5);
+  //   var mesh = new Physijs.BoxMesh( geometry, material );
+	// 	mesh.setDamping(0.1,0.1);
+	// 	mesh.castShadow = true;
+	// 	return mesh;
+	// }
 
-		var friction = 0.8; // high friction
-		var restitution = 0.3; // low restitution
 
-		var material = Physijs.createMaterial(
-    	new THREE.MeshBasicMaterial({ color: 0xffff00 }),
-    	friction,
-    	restitution
-		);
 
-		//var material = new THREE.MeshLambertMaterial( { color: 0xffff00} );
-		var pmaterial = new Physijs.createMaterial(material,0.9,0.5);
-    var mesh = new Physijs.BoxMesh( geometry, material );
-		mesh.setDamping(0.1,0.1);
-		mesh.castShadow = true;
-		return mesh;
+	function createSheeps(){
+
+	var geometry = new THREE.BoxGeometry( 2, 2, 6);
+	var material = new THREE.MeshLambertMaterial( { color: 0xffff00} );
+	var pmaterial = new Physijs.createMaterial(material,0.9,0.05);
+	pmaterial.visible = false;
+	var mesh = new Physijs.BoxMesh( geometry, pmaterial );
+	mesh.setDamping(0.1,0.1);
+	mesh.castShadow = true;
+
+	var particleMaterial = new THREE.MeshBasicMaterial();
+	particleMaterial.map = THREE.ImageUtils.loadTexture('../models/wool.jpg');
+	particleMaterial.side = THREE.DoubleSide;
+	var jsonLoader = new THREE.JSONLoader();
+	jsonLoader.load( "models/sheep.js", function (geometry2) {
+		var sheep = new THREE.Mesh(geometry2, particleMaterial);
+		mesh.add(sheep);
 	}
+	);
+	return mesh;
 
-
-
+}
 
 
 	var clock;
