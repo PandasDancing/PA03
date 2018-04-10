@@ -1,11 +1,8 @@
 """Convert Wavefront OBJ / MTL files into Three.js (JSON model version, to be used with ascii / binary loader)
-
 -------------------------
 How to use this converter
 -------------------------
-
 python convert_obj_three.py -i infile.obj -o outfile.js [-m "morphfiles*.obj"] [-c "morphcolors*.obj"] [-a center|centerxz|top|bottom|none] [-s smooth|flat] [-t ascii|binary] [-d invert|normal] [-b] [-e]
-
 Notes:
     - flags
         -i infile.obj			input OBJ file
@@ -19,7 +16,6 @@ Notes:
         -b						bake material colors into face colors
         -x 10.0                 scale and truncate
         -f 2                    morph frame sampling step
-
     - by default:
         use smooth shading (if there were vertex normals in the original model)
         will be in ASCII format
@@ -27,71 +23,47 @@ Notes:
         no face colors baking
         no scale and truncate
         morph frame step = 1 (all files will be processed)
-
     - binary conversion will create two files:
         outfile.js  (materials)
         outfile.bin (binary buffers)
-
 --------------------------------------------------
 How to use generated JS file in your HTML document
 --------------------------------------------------
-
     <script type="text/javascript" src="Three.js"></script>
-
     ...
-
     <script type="text/javascript">
         ...
-
         // load ascii model
-
         var jsonLoader = new THREE.JSONLoader();
         jsonLoader.load( "Model_ascii.js", function( geometry ) { createScene( geometry ) } );
-
         // load binary model
-
         var binLoader = new THREE.BinaryLoader();
         binLoader.load( "Model_bin.js", function( geometry ) { createScene( geometry) } );
-
         function createScene( geometry ) {
-
             var mesh = new THREE.Mesh( geometry, new THREE.MeshFaceMaterial() );
-
         }
-
         ...
     </script>
-
 -------------------------------------
 Parsers based on formats descriptions
 -------------------------------------
-
     http://en.wikipedia.org/wiki/Obj
     http://en.wikipedia.org/wiki/Material_Template_Library
-
 -------------------
 Current limitations
 -------------------
-
     - for the moment, only diffuse color and texture are used
       (will need to extend shaders / renderers / materials in Three)
-
     - texture coordinates can be wrong in canvas renderer
       (there is crude normalization, but it doesn't
        work for all cases)
-
     - smoothing can be turned on/off only for the whole mesh
-
 ----------------------------------------------
 How to get proper OBJ + MTL files with Blender
 ----------------------------------------------
-
     0. Remove default cube (press DEL and ENTER)
-
     1. Import / create model
-
     2. Select all meshes (Select -> Select All by Type -> Mesh)
-
     3. Export to OBJ (File -> Export -> Wavefront .obj)
         - enable following options in exporter
             Material Groups
@@ -104,22 +76,17 @@ How to get proper OBJ + MTL files with Blender
             UVs
             Normals
             Materials
-
         - select empty folder
         - give your exported file name with "obj" extension
         - click on "Export OBJ" button
-
     4. Your model is now all files in this folder (OBJ, MTL, number of images)
         - this converter assumes all files staying in the same folder,
           (OBJ / MTL files use relative paths)
-
         - for WebGL, textures must be power of 2 sized
-
 ------
 Author
 ------
 AlteredQualia http://alteredqualia.com
-
 """
 
 import fileinput
@@ -156,7 +123,6 @@ COLORS = [0xeeeeee, 0xee0000, 0x00ee00, 0x0000ee, 0xeeee00, 0x00eeee, 0xee00ee]
 # #####################################################
 TEMPLATE_FILE_ASCII = u"""\
 {
-
     "metadata" :
     {
         "formatVersion" : 3.1,
@@ -169,31 +135,20 @@ TEMPLATE_FILE_ASCII = u"""\
         "uvs"           : %(nuv)d,
         "materials"     : %(nmaterial)d
     },
-
     "scale" : %(scale)f,
-
     "materials": [%(materials)s],
-
     "vertices": [%(vertices)s],
-
     "morphTargets": [%(morphTargets)s],
-
     "morphColors": [%(morphColors)s],
-
     "normals": [%(normals)s],
-
     "colors": [%(colors)s],
-
     "uvs": [[%(uvs)s]],
-
     "faces": [%(faces)s]
-
 }
 """
 
 TEMPLATE_FILE_BIN = u"""\
 {
-
     "metadata" :
     {
         "formatVersion" : 3.1,
@@ -205,11 +160,8 @@ TEMPLATE_FILE_BIN = u"""\
         "uvs"           : %(nuv)d,
         "materials"     : %(nmaterial)d
     },
-
     "materials": [%(materials)s],
-
     "buffers": "%(buffers)s"
-
 }
 """
 
@@ -229,10 +181,8 @@ TEMPLATE_MORPH_COLORS   = '\t{ "name": "%s", "colors": [%s] }'
 # #####################################################
 def file_exists(filename):
     """Return true if file exists and is accessible for reading.
-
     Should be safer than just testing for existence due to links and
     permissions magic on Unix filesystems.
-
     @rtype: boolean
     """
 
@@ -458,7 +408,6 @@ def parse_mtl(fname):
 # #####################################################
 def parse_vertex(text):
     """Parse text chunk specifying single vertex.
-
     Possible formats:
         vertex index
         vertex index / texture index
@@ -851,7 +800,6 @@ def generate_morph_colors(colorfiles, n_vertices, n_faces):
 # #####################################################
 def generate_color(i):
     """Generate hex color corresponding to integer.
-
     Colors should have well defined ordering.
     First N colors are hardcoded, then colors are random
     (must seed random number  generator with deterministic value
@@ -874,7 +822,6 @@ def value2string(v):
 
 def generate_materials(mtl, materials):
     """Generate JS array of materials objects
-
     JS material objects are basically prettified one-to-one
     mappings of MTL properties in JSON format.
     """
@@ -1024,7 +971,6 @@ def sort_faces(faces):
 # #####################################################
 def convert_ascii(infile, morphfiles, colorfiles, outfile):
     """Convert infile.obj to outfile.js
-
     Here is where everything happens. If you need to automate conversions,
     just import this file as Python module and call this method.
     """
@@ -1580,4 +1526,3 @@ if __name__ == "__main__":
         convert_ascii(infile, morphfiles, colorfiles, outfile)
     elif TYPE == "binary":
         convert_binary(infile, outfile)
-

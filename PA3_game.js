@@ -14,7 +14,8 @@ The user moves a monkey around the board trying to knock balls into a cone
 	var avatar;
 	// here are some mesh objects ...
 
-	var cone;
+	//var cone;
+	var box;
 
 
 	var endScene, endCamera, endText;
@@ -132,9 +133,11 @@ The user moves a monkey around the board trying to knock balls into a cone
 
 			addBalls();
 
-			cone = createConeMesh(4,6);
-			cone.position.set(10,3,7);
-			scene.add(cone);
+			//cone = createConeMesh(4,6);
+			box = createBoxMesh(2,2);
+			box.position.set(10,0,7);
+			box.rotateX(Math.PI/2);
+			scene.add(box);
 
 			// npc = createNPC();
 			// npc.position.set(20,1,10);
@@ -193,8 +196,8 @@ The user moves a monkey around the board trying to knock balls into a cone
 
 			ball.addEventListener( 'collision',
 				function( other_object, relative_velocity, relative_rotation, contact_normal ) {
-					if (other_object==cone){
-						console.log("ball "+i+" hit the cone");
+					if (other_object==box){
+						console.log("ball "+i+" hit the box");
 						soundEffect('good.wav');
 						gameState.score += 1;  // add one to the score
 						if (gameState.score==numBalls) {
@@ -435,18 +438,40 @@ The user moves a monkey around the board trying to knock balls into a cone
 		return mesh;
 	}
 
-	function createConeMesh(r,h){
-		var geometry = new THREE.ConeGeometry( r, h, 32);
-		var texture = new THREE.TextureLoader().load( '../images/tile.jpg' );
-		texture.wrapS = THREE.RepeatWrapping;
-		texture.wrapT = THREE.RepeatWrapping;
-		texture.repeat.set( 1, 1 );
-		var material = new THREE.MeshLambertMaterial( { color: 0xffffff,  map: texture ,side:THREE.DoubleSide} );
-		var pmaterial = new Physijs.createMaterial(material,0.9,0.5);
-		var mesh = new Physijs.ConeMesh( geometry, pmaterial, 0 );
+	// function createConeMesh(r,h){
+	// 	var geometry = new THREE.ConeGeometry( r, h, 32);
+	// 	var texture = new THREE.TextureLoader().load( '../images/tile.jpg' );
+	// 	texture.wrapS = THREE.RepeatWrapping;
+	// 	texture.wrapT = THREE.RepeatWrapping;
+	// 	texture.repeat.set( 1, 1 );
+	// 	var material = new THREE.MeshLambertMaterial( { color: 0xffffff,  map: texture ,side:THREE.DoubleSide} );
+	// 	var pmaterial = new Physijs.createMaterial(material,0.9,0.5);
+	// 	var mesh = new Physijs.ConeMesh( geometry, pmaterial, 0 );
+	// 	mesh.castShadow = true;
+	// 	return mesh;
+	// }
+
+	function createBoxMesh(r,h){
+		var geometry = new THREE.BoxGeometry( r, h, 10);
+		var material = new THREE.MeshLambertMaterial( { color: 0xffff00} );
+		var pmaterial = new Physijs.createMaterial(material,0.9,0.05);
+		pmaterial.visible = false;
+		var mesh = new Physijs.BoxMesh( geometry, pmaterial, 0 );
+		mesh.setDamping(0.1,0.1);
 		mesh.castShadow = true;
+
+		var particleMaterial = new THREE.MeshBasicMaterial();
+		particleMaterial.map = THREE.ImageUtils.loadTexture('models/wood.jpg');
+		particleMaterial.side = THREE.DoubleSide;
+		var jsonLoader = new THREE.JSONLoader();
+		jsonLoader.load( "../models/boxChiken.js", function (geometry2) {
+			var box = new THREE.Mesh(geometry2, particleMaterial);
+			mesh.add(box);
+		}
+		);
 		return mesh;
-	}
+}
+
 
 
 	function createBall(){
