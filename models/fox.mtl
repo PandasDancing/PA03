@@ -1,0 +1,23 @@
+# Blender MTL File: 'Fox_scene.blend.blend'
+# Material Count: 2
+
+newmtl Material.001
+Ns 96.078431
+Ka 1.000000 1.000000 1.000000
+Kd 0.640000 0.640000 0.640000
+Ks 0.248503 0.248503 0.248503
+Ke 0.480000 0.480000 0.480000
+Ni 1.000000
+d 1.000000
+illum 0
+map_Kd /Users/xichen/Downloads/lowpoly-fox/source/FoxColors.png
+
+newmtl Material.007
+Ns 96.078431
+Ka 1.000000 1.000000 1.000000
+Kd 1.000000 0.001285 0.000000
+Ks 1.000000 0.894104 0.952713
+Ke 2.000000 0.002571 0.000000
+Ni 1.000000
+d 1.000000
+illum 2

@@ -366,27 +366,20 @@ The user moves a monkey around the board trying to knock balls into a cone
 					avatarCam.lookAt(0,7,10);
 					mesh.add(avatarCam);
 
-					console.log("load monkey!");
-					var loader = new THREE.OBJLoader();
-					loader.load("/monkey.obj",
-							function (obj) {
-								obj.scale.x=1;
-								obj.scale.y=1;
-								obj.scale.z=1;
-								obj.position.y = 0;
-								obj.position.x = 0;
-								mesh.add(obj);
-								obj.castShadow = true;
-							},
-							function(xhr){
-								console.log( (xhr.loaded / xhr.total * 100) + '% loaded' );},  //loading bar
 
-							function(err){
-								console.log("error in loading: "+err);});
-
-								var scoop = createBoxMesh2(0xff0000,5,1,0.1);
-								scoop.position.set(0,-1,2);
-								mesh.add(scoop);
+					var particleMaterial = new THREE.MeshBasicMaterial();
+					particleMaterial.map = THREE.ImageUtils.loadTexture('models/dog.jpg');
+					particleMaterial.side = THREE.DoubleSide;
+					var jsonLoader = new THREE.JSONLoader();
+					jsonLoader.load( "models/dog.js", function (geometry2) {
+						var fox = new THREE.Mesh(geometry2, particleMaterial);
+						mesh.add(fox);
+					}
+				  );
+					//
+					// var scoop = createBoxMesh2(0xff0000,5,1,0.1);
+					// scoop.position.set(0,-1,2);
+					// mesh.add(scoop);
 					return mesh;
 	}
 
