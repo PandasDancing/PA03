@@ -56,7 +56,7 @@ The user moves a monkey around the board trying to knock balls into a cone
 
 	function createStartScene(){
 		startScene = initScene();
-		startText =createSkyBox2('start_game.jpg', 1);
+		startText =createSkyBox2('start_game.jpg', 1); // essentially one side of a box
 		//createSkyBox
 		startScene.add(startText);
 		var light = createPointLight();
@@ -71,7 +71,7 @@ The user moves a monkey around the board trying to knock balls into a cone
 
 		function createEndScene(){
 			endScene = initScene();
-			endText = createSkyBox('youwon.png',10);
+			endText = createSkyBox2('youwon.png',1);
 			//endText.rotateX(Math.PI);
 			endScene.add(endText);
 			var light1 = createPointLight();
@@ -85,7 +85,7 @@ The user moves a monkey around the board trying to knock balls into a cone
 
 		function createLoseScene(){
 			loseScene = initScene();
-			loseText = createSkyBox('youlose.jpeg',10);
+			loseText = createSkyBox2('youlose.jpeg',1);
 			//endText.rotateX(Math.PI);
 			loseScene.add(loseText);
 			var light1 = createPointLight();
@@ -187,21 +187,21 @@ The user moves a monkey around the board trying to knock balls into a cone
 
 
 	function addSheeps(){
-		var numBalls = 12;
+		var numSheeps = 12;
 
 
-		for(i=0;i<numBalls;i++){
-			var ball = createSheeps();
-			ball.position.set(randN(20)+10, 30,randN(20)+10);
-			scene.add(ball);
+		for(i=0;i<numSheeps;i++){
+			var sheep = createSheeps();
+			sheep.position.set(randN(20)+10,0.5,randN(20)+10);
+			scene.add(sheep);
 
-			ball.addEventListener( 'collision',
+			sheep.addEventListener( 'collision',
 				function( other_object, relative_velocity, relative_rotation, contact_normal ) {
 					if (other_object==box){
-						console.log("ball "+i+" hit the box");
+						console.log("sheep "+i+" hit the box");
 						soundEffect('good.wav');
 						gameState.score += 1;  // add one to the score
-						if (gameState.score==numBalls) {
+						if (gameState.score==numSheeps) {
 							gameState.scene='youwon';
 						}
 						scene.remove(this);  //why not disapearing??
@@ -389,7 +389,7 @@ The user moves a monkey around the board trying to knock balls into a cone
 
 	function createSkyBox2(image,k){
 		// creating a textured plane which receives shadows
-		var geometry = new THREE.BoxGeometry( 50, 50, 50 );
+		var geometry = new THREE.BoxGeometry( 90, 50, 50 );
 		var texture = new THREE.TextureLoader().load( '../images/'+image );
 		texture.wrapS = THREE.RepeatWrapping;
 		texture.wrapT = THREE.RepeatWrapping;
@@ -421,7 +421,7 @@ The user moves a monkey around the board trying to knock balls into a cone
 					mesh.setDamping(0.1,0.1);
 					mesh.castShadow = true;
 
-					avatarCam.position.set(0,4,0);
+					avatarCam.position.set(0,8,0);
 					avatarCam.lookAt(0,7,10);
 					mesh.add(avatarCam);
 
@@ -567,7 +567,7 @@ The user moves a monkey around the board trying to knock balls into a cone
 		if (gameState.scene == 'youlose' && event.key=='r') {
 			gameState.scene = 'main';
 			gameState.score = 0;
-			addBalls();
+			addSheeps();
 			return;
 		}
 
