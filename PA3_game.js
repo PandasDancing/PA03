@@ -56,7 +56,8 @@ The user moves a monkey around the board trying to knock balls into a cone
 
 	function createStartScene(){
 		startScene = initScene();
-		startText = createSkyBox('start.png',5);
+		startText =createSkyBox2('start_game.jpg', 1);
+		//createSkyBox
 		startScene.add(startText);
 		var light = createPointLight();
 		light.position.set(0,200,20);
@@ -382,12 +383,24 @@ The user moves a monkey around the board trying to knock balls into a cone
 		var mesh = new THREE.Mesh( geometry, material, 0 );
 
 		mesh.receiveShadow = false;
-
-
 		return mesh;
 		// we need to rotate the mesh 90 degrees to make it horizontal not vertical
+	}
 
-
+	function createSkyBox2(image,k){
+		// creating a textured plane which receives shadows
+		var geometry = new THREE.BoxGeometry( 50, 50, 50 );
+		var texture = new THREE.TextureLoader().load( '../images/'+image );
+		texture.wrapS = THREE.RepeatWrapping;
+		texture.wrapT = THREE.RepeatWrapping;
+		texture.repeat.set( k, k );
+		var material = new THREE.MeshLambertMaterial( { color: 0xffffff,  map: texture ,side:THREE.DoubleSide} );
+		//var pmaterial = new Physijs.createMaterial(material,0.9,0.5);
+		//var mesh = new THREE.Mesh( geometry, material );
+		var mesh = new THREE.Mesh( geometry, material, 0 );
+		mesh.receiveShadow = false;
+		return mesh;
+		// we need to rotate the mesh 90 degrees to make it horizontal not vertical
 	}
 
 	function createBoxMesh2(color,w,h,d){
@@ -684,7 +697,7 @@ The user moves a monkey around the board trying to knock balls into a cone
 				break;
 
 			case "start":
-				startText.rotateY(0.005);
+				// startText.rotateY(0.005);
 				renderer.render( startScene, startCamera );
 				break;
 
