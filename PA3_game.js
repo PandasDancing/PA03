@@ -168,7 +168,7 @@ The user moves a monkey around the board trying to knock balls into a cone
 			      if (other_object==avatar){
 									//updates the health if avatar obj is touch by the NPC obj
 									gameState.health --;
-
+									soundEffect('foxbark.wav');
 									 if (gameState.health==0) {
 									 	gameState.scene='youlose';
 									 }
@@ -202,7 +202,7 @@ The user moves a monkey around the board trying to knock balls into a cone
 						console.log("sheep "+i+" hit the box");
 						soundEffect('sheep-bleat.wav');
 						gameState.score += 1;  // add one to the score
-						if (gameState.score==numSheeps) {
+						if (gameState.score==10) {
 							gameState.scene='youwon';
 						}
 						scene.remove(this);  //why not disapearing??
@@ -318,12 +318,11 @@ The user moves a monkey around the board trying to knock balls into a cone
 		var pmaterial = new Physijs.createMaterial(material,0.9,1);
 		//var mesh = new THREE.Mesh( geometry, material );
 		var mesh = new Physijs.BoxMesh( geometry, pmaterial, 0 );
-
 		mesh.receiveShadow = true;
-
 		mesh.rotateX(Math.PI/2);
 
-		var particleMaterial = new THREE.MeshBasicMaterial();
+		//treetop
+		var particleMaterial = new THREE.MeshLambertMaterial();
 		particleMaterial.map = THREE.ImageUtils.loadTexture('models/pink.jpg');
 		particleMaterial.side = THREE.DoubleSide;
 		var jsonLoader = new THREE.JSONLoader();
@@ -336,9 +335,11 @@ The user moves a monkey around the board trying to knock balls into a cone
 		}
 		);
 
+		//tree trunk
 		var particleMaterial2 = new THREE.MeshBasicMaterial();
 		particleMaterial2.map = THREE.ImageUtils.loadTexture('models/brown.jpg');
 		particleMaterial2.side = THREE.DoubleSide;
+		var jsonLoader = new THREE.JSONLoader();
 		jsonLoader.load( "models/treebody.js", function (geometry2) {
 			var s = new THREE.Mesh(geometry2, particleMaterial2);
 			s.rotateX(Math.PI/2*3);
@@ -348,6 +349,7 @@ The user moves a monkey around the board trying to knock balls into a cone
 		}
 		);
 
+		//mountains
 		var particleMaterial3 = new THREE.MeshBasicMaterial();
 		particleMaterial3.map = THREE.ImageUtils.loadTexture('models/Ground_D2.png');
 		particleMaterial3.side = THREE.DoubleSide;
@@ -499,6 +501,7 @@ The user moves a monkey around the board trying to knock balls into a cone
 		mesh.setDamping(0.1,0.1);
 		mesh.castShadow = true;
 
+		//center box
 		var particleMaterial = new THREE.MeshBasicMaterial();
 		particleMaterial.map = THREE.ImageUtils.loadTexture('models/wood.jpg');
 		particleMaterial.side = THREE.DoubleSide;
@@ -508,8 +511,9 @@ The user moves a monkey around the board trying to knock balls into a cone
 			mesh.add(box);
 		}
 		);
+
 		return mesh;
-}
+	}
 
 
 
