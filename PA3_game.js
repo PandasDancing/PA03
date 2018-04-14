@@ -12,6 +12,7 @@ The user moves a monkey around the board trying to knock balls into a cone
 	var scene, renderer;  // all threejs programs need these
 	var camera, avatarCam, camera3;  // we have two cameras in the main scene
 	var avatar;
+	var enemy;
 	// here are some mesh objects ...
 
 	//var cone;
@@ -161,7 +162,7 @@ The user moves a monkey around the board trying to knock balls into a cone
 						      })
 		  scene.add(npc);
 
-			cube = createBoxMesh2(0x000000,2,2,2);
+			cube = createEnemy();
 			cube.position.set(-20,5,-20);
 			cube.addEventListener('collision',function(other_object){
 			      if (other_object==avatar){
@@ -441,6 +442,31 @@ The user moves a monkey around the board trying to knock balls into a cone
 					// mesh.add(scoop);
 					return mesh;
 	}
+
+	function createEnemy(){
+					var geometry = new THREE.BoxGeometry( 3, 3, 6);
+					var material = new THREE.MeshLambertMaterial( { color: 0xffff00} );
+					var pmaterial = new Physijs.createMaterial(material,0.9,0.05);
+					pmaterial.visible = false;
+					var mesh = new Physijs.BoxMesh( geometry, pmaterial );
+					mesh.setDamping(0.1,0.1);
+					mesh.castShadow = true;
+
+					// avatarCam.position.set(0,8,0);
+					// avatarCam.lookAt(0,7,10);
+					// mesh.add(avatarCam);
+
+					var particleMaterial = new THREE.MeshBasicMaterial();
+					//particleMaterial.map = THREE.ImageUtils.loadTexture('models/dog.jpg');
+					particleMaterial.side = THREE.DoubleSide;
+					var jsonLoader = new THREE.JSONLoader();
+					jsonLoader.load( "models/fox.js", function (geometry2) {
+					var fox = new THREE.Mesh(geometry2, particleMaterial);
+					mesh.add(fox);
+					}
+				  );
+					return mesh;
+	}	
 
 	function createBoxMesh2(color,w,h,d){
 		var geometry = new THREE.BoxGeometry( w, h, d);
