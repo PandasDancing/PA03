@@ -165,7 +165,7 @@ The user moves a monkey around the board trying to knock balls into a cone
 			cube = createEnemy();
 			cube.position.set(-20,5,-20);
 			cube.addEventListener('collision',function(other_object){
-			      if (other_object==avatar){
+			      if (other_object==sheep){
 									//updates the health if avatar obj is touch by the NPC obj
 									gameState.health --;
 									soundEffect('foxbark.wav');
@@ -183,10 +183,6 @@ The user moves a monkey around the board trying to knock balls into a cone
 	function randN(n){
 		return Math.random()*n;
 	}
-
-
-
-
 	function addSheeps(){
 		var numSheeps = 12;
 
@@ -198,7 +194,7 @@ The user moves a monkey around the board trying to knock balls into a cone
 
 			sheep.addEventListener( 'collision',
 				function( other_object, relative_velocity, relative_rotation, contact_normal ) {
-					if (other_object==box){
+					if (other_object==cube){
 						console.log("sheep "+i+" hit the box");
 						soundEffect('sheep-bleat.wav');
 						gameState.score += 1;  // add one to the score
