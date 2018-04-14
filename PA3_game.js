@@ -210,6 +210,19 @@ The user moves a monkey around the board trying to knock balls into a cone
 					}
 				}
 			)
+						sheep.addEventListener( 'collision',
+				function( other_object, relative_velocity, relative_rotation, contact_normal ) {
+					if (other_object==box){
+						console.log("sheep "+i+" hit the box");
+						soundEffect('sheep-bleat.wav');
+						gameState.score += 1; 
+						if (gameState.score==10) {
+							gameState.scene='youwon';
+						}
+						scene.remove(this);  
+					}
+				}
+			)
 		}
 	}
 
