@@ -117,7 +117,7 @@ The user moves a monkey around the board trying to knock balls into a cone
 
 
 			// create the ground and the skybox
-			var ground = createGround('Ground_D.png');
+			var ground = createGround('grass.png');
 			scene.add(ground);
 			var skybox = createSkyBox('sky.jpg',1);
 			scene.add(skybox);
@@ -200,7 +200,7 @@ The user moves a monkey around the board trying to knock balls into a cone
 				function( other_object, relative_velocity, relative_rotation, contact_normal ) {
 					if (other_object==box){
 						console.log("sheep "+i+" hit the box");
-						soundEffect('good.wav');
+						soundEffect('sheep-bleat.wav');
 						gameState.score += 1;  // add one to the score
 						if (gameState.score==numSheeps) {
 							gameState.scene='youwon';
@@ -466,7 +466,7 @@ The user moves a monkey around the board trying to knock balls into a cone
 					}
 				  );
 					return mesh;
-	}	
+	}
 
 	function createBoxMesh2(color,w,h,d){
 		var geometry = new THREE.BoxGeometry( w, h, d);
