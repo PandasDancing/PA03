@@ -27,7 +27,7 @@ The user moves a monkey around the board trying to knock balls into a cone
 
 	var controls =
 	     {fwd:false, bwd:false, left:false, right:false,
-				speed:10, fly:false, reset:false,
+				speed:20, fly:false, reset:false,
 		    camera:camera}
 
 	var gameState =
@@ -654,7 +654,7 @@ The user moves a monkey around the board trying to knock balls into a cone
 			case "d": controls.right = false; break;
 			case "r": controls.up    = false; break;
 			case "f": controls.down  = false; break;
-			case "m": controls.speed = 10; break;
+			case "m": controls.speed = 20; break;
       case " ": controls.fly = false; break;
       case "h": controls.reset = false; break;
 		}
@@ -668,7 +668,7 @@ The user moves a monkey around the board trying to knock balls into a cone
 	function updateCube(){
 		cube.lookAt(avatar.position);
 		  //npc.__dirtyPosition = true;
-		cube.setLinearVelocity(cube.getWorldDirection().multiplyScalar(1.2));
+		cube.setLinearVelocity(cube.getWorldDirection().multiplyScalar(3));
 	}
 
 
