@@ -468,7 +468,7 @@ The user moves a monkey around the board trying to knock balls into a cone
 					// mesh.add(avatarCam);
 
 					var particleMaterial = new THREE.MeshBasicMaterial();
-					particleMaterial.map = THREE.ImageUtils.loadTexture('models/fox.png');
+					particleMaterial.map = THREE.ImageUtils.loadTexture('models/FoxColors.png');
 					particleMaterial.side = THREE.DoubleSide;
 					var jsonLoader = new THREE.JSONLoader();
 					jsonLoader.load( "models/fox.js", function (geometry2) {
