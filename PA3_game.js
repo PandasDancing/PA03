@@ -468,7 +468,7 @@ The user moves a monkey around the board trying to knock balls into a cone
 					// mesh.add(avatarCam);
 
 					var particleMaterial = new THREE.MeshBasicMaterial();
-					//particleMaterial.map = THREE.ImageUtils.loadTexture('models/dog.jpg');
+					particleMaterial.map = THREE.ImageUtils.loadTexture('models/fox.png');
 					particleMaterial.side = THREE.DoubleSide;
 					var jsonLoader = new THREE.JSONLoader();
 					jsonLoader.load( "models/fox.js", function (geometry2) {
@@ -560,11 +560,12 @@ The user moves a monkey around the board trying to knock balls into a cone
 	mesh.castShadow = true;
 
 	var particleMaterial = new THREE.MeshBasicMaterial();
-	particleMaterial.map = THREE.ImageUtils.loadTexture('../models/wool.jpg');
+	particleMaterial.map = THREE.ImageUtils.loadTexture('../models/SHEEPnew.jpg');
 	particleMaterial.side = THREE.DoubleSide;
 	var jsonLoader = new THREE.JSONLoader();
-	jsonLoader.load( "models/sheep.js", function (geometry2) {
+	jsonLoader.load( "models/sheepNew.js", function (geometry2) {
 		var sheep = new THREE.Mesh(geometry2, particleMaterial);
+		sheep.scale.set(3,3,3);
 		mesh.add(sheep);
 	}
 	);
