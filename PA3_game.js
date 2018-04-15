@@ -137,8 +137,8 @@ The user moves a monkey around the board trying to knock balls into a cone
 
 			//cone = createConeMesh(4,6);
 			box = createBoxMesh(2,2);
-			box.position.set(10,0,7);
-			box.rotateX(Math.PI/2);
+			box.position.set(30,0,15);
+			//box.rotateX(Math.PI/2);
 			scene.add(box);
 
 			// npc = createNPC();
@@ -512,12 +512,13 @@ The user moves a monkey around the board trying to knock balls into a cone
 
 		//center box
 		var particleMaterial = new THREE.MeshBasicMaterial();
-		particleMaterial.map = THREE.ImageUtils.loadTexture('models/wood.jpg');
+		particleMaterial.map = THREE.ImageUtils.loadTexture('models/Farmhouse.jpg');
 		particleMaterial.side = THREE.DoubleSide;
 		var jsonLoader = new THREE.JSONLoader();
-		jsonLoader.load( "../models/boxChiken.js", function (geometry2) {
-			var box = new THREE.Mesh(geometry2, particleMaterial);
-			mesh.add(box);
+		jsonLoader.load( "../models/Farmhouse.js", function (geometry2) {
+		var box = new THREE.Mesh(geometry2, particleMaterial);
+		box.scale.set(.5,.5,.5);
+		mesh.add(box);
 		}
 		);
 
