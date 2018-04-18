@@ -25,6 +25,9 @@ The user moves a monkey around the board trying to knock balls into a cone
 
 	var startScene, startCam, startText;
 
+	var  dragcamera,dragcontrols;
+
+
 	var controls =
 	     {fwd:false, bwd:false, left:false, right:false,
 				speed:20, fly:false, reset:false,
@@ -115,6 +118,11 @@ The user moves a monkey around the board trying to knock balls into a cone
 			camera3 = new THREE.PerspectiveCamera( 120, window.innerWidth / window.innerHeight, 0.1, 1000 );
 			camera3.position.set(20,20,30);
 
+			dragcamera = new THREE.PerspectiveCamera( 45, window.innerWidth / window.innerHeight, 1, 10000 );
+
+			dragcontrols = new THREE.OrbitControls( dragcamera, renderer.domElement  );
+			dragcamera.position.set( 0, 20, 100 );
+			dragcontrols.update();
 
 			// create the ground and the skybox
 			var ground = createGround('grass.png');
@@ -123,7 +131,7 @@ The user moves a monkey around the board trying to knock balls into a cone
 			scene.add(skybox);
 			var ambientLight = new THREE.AmbientLight(0xFFFFFF, 0.8);// better light
 			scene.add(ambientLight);
-
+			//createSkyBox3();
 			// create the avatar
 			avatarCam = new THREE.PerspectiveCamera( 60, window.innerWidth / window.innerHeight, 0.1, 1000 );
 			avatar = createAvatar();
@@ -215,11 +223,11 @@ The user moves a monkey around the board trying to knock balls into a cone
 					if (other_object==box){
 						console.log("sheep "+i+" hit the box");
 						soundEffect('sheep-bleat.wav');
-						gameState.score += 1; 
+						gameState.score += 1;
 						if (gameState.score==10) {
 							gameState.scene='youwon';
 						}
-						scene.remove(this);  
+						scene.remove(this);
 					}
 				}
 			)
@@ -397,6 +405,36 @@ The user moves a monkey around the board trying to knock balls into a cone
 		mesh.receiveShadow = false;
 		return mesh;
 		// we need to rotate the mesh 90 degrees to make it horizontal not vertical
+	}
+
+	function createSkyBox3(){
+		var mesh	= THREEx.createSkymap('mars')
+scene.add( mesh )
+console.log(Object.keys(THREEx.TextureCube.WellKnownUrls));
+var textureCube	= THREEx.createTextureCube([
+	'cube_px.jpg', 'cube_nx.jpg',
+	'cube_py.jpg', 'cube_ny.jpg',
+	'cube_pz.jpg', 'cube_nz.jpg',
+])
+var mesh	= THREEx.createSkymap(textureCube)
+scene.add( mesh )
+
+		// var geometry = new THREE.CubeGeometry( 10, 10, 10 );
+		// var cubeMaterials = [
+		// 	new THREE.MeshBasicMaterial({map: new THREE.TextureLoader().load("images/skybox/front.png"), side: THREE.DoubleSide}),
+		// 	new THREE.MeshBasicMaterial({map: new THREE.TextureLoader().load("images/skybox/back.png"), side: THREE.DoubleSide}),
+		// 	new THREE.MeshBasicMaterial({map: new THREE.TextureLoader().load("images/skybox/up.png"), side: THREE.DoubleSide}),
+		// 	new THREE.MeshBasicMaterial({map: new THREE.TextureLoader().load("images/skybox/down.png"), side: THREE.DoubleSide}),
+		// 	new THREE.MeshBasicMaterial({map: new THREE.TextureLoader().load("images/skybox/right.png"), side: THREE.DoubleSide}),
+		// 	new THREE.MeshBasicMaterial({map: new THREE.TextureLoader().load("images/skybox/left.png"), side: THREE.DoubleSide})
+		// ]
+		// var cubeMaterial = new THREE.MeshFaceMaterial(cubeMaterial);
+		//
+		// var cube = new THREE.Mesh(geometry, cubeMaterial);
+		// scene.add(cube);
+		// var ambientLight = new THREE.AmbientLight( 0xFFFFFF, 0.3);
+		// scene.add( ambientLight);
+
 	}
 
 	function createSkyBox2(image,k){
@@ -634,6 +672,7 @@ The user moves a monkey around the board trying to knock balls into a cone
 			case "1": gameState.camera = camera; break;
 			case "2": gameState.camera = avatarCam; break;
 			case "3": gameState.camera = camera3; break;
+			case "4": gameState.camera = dragcamera; break;
 
 			// move the camera around, relative to the avatar
 			case "ArrowLeft": avatarCam.translateY(1);break;
@@ -711,6 +750,7 @@ The user moves a monkey around the board trying to knock balls into a cone
 	function animate() {
 
 		requestAnimationFrame( animate );
+		dragcontrols.update();
 
 		switch(gameState.scene) {
 			case "youwon":
